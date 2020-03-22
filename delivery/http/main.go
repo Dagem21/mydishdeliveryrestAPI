@@ -2,6 +2,7 @@ package main
 
 import (
 	"net/http"
+	"os"
 
 	commentrepo "github.com/dagem21/mydishdelivery/comments/repository"
 	commentserv "github.com/dagem21/mydishdelivery/comments/service"
@@ -40,7 +41,7 @@ import (
 )
 
 func main()  {
-	dbconn, err := gorm.Open("mysql","root:@tcp(127.0.0.1:3306)/mydishdelivery")
+	dbconn, err := gorm.Open("mysql","epiz_25367355:pSaO04QFb5u@tcp(sql304.epizy.com)/epiz_25367355_mydishdelivery")
 
 	if err!=nil {
 		panic(err.Error())
@@ -140,6 +141,6 @@ func main()  {
 	router.POST("/v1/orders", OrderHandler.PostOrder)
 	router.DELETE("/v1/orders/:id", OrderHandler.DeleteOrder)
 
-	http.ListenAndServe(":8282", router)
+	http.ListenAndServe(":"+os.Getenv("PORT"), router)
 
 }
